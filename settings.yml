@@ -72,7 +72,6 @@ tiers:
         required: true
       badge_ids:
         type: string
-        required: true
       group:
         type: groups
         min: 0
