@@ -1,7 +1,10 @@
 .block-cta {
+  // Card treatment from meta's homepage blocks: theme surface plus the core
+  // card shadow, no border. Colours come from the active scheme.
   &__layout {
-    background-color: var(--skills-accent);
-    color: var(--skills-text-on-dark);
+    background-color: var(--secondary);
+    color: var(--primary);
+    box-shadow: var(--shadow-card);
     padding: var(--space-8) var(--space-6);
     text-align: center;
     display: flex;
@@ -13,13 +16,13 @@
 
   &__title {
     margin: 0;
-    color: var(--skills-text-on-dark);
+    color: var(--primary);
     max-width: 600px;
   }
 
   &__description {
     font-size: var(--font-up-1);
-    opacity: 0.9;
+    color: var(--primary-medium);
     line-height: var(--line-height-large);
     margin: 0;
 
@@ -28,17 +31,12 @@
     }
   }
 
+  // No colour overrides: on a surface background .btn-primary should use the
+  // theme's own button palette.
   &__button {
     margin-top: var(--space-2);
-    background-color: var(--skills-text-on-dark);
-    color: var(--skills-accent);
     font-weight: 700;
     font-size: var(--font-up-1);
     padding: 0.75em 2em;
-
-    &:hover {
-      background-color: var(--skills-warm);
-      color: var(--skills-surface-dark);
-    }
   }
 }
