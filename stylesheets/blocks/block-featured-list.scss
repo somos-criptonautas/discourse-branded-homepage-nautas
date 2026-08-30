@@ -1,0 +1,45 @@
+.block-featured-list {
+  &__layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--card-padding);
+  }
+
+  &__title {
+    @include section-title;
+  }
+
+  &__link {
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--skills-accent);
+  }
+
+  &__list {
+    .topic-list {
+      margin: 0;
+
+      th,
+      td {
+        padding-inline: var(--space-4);
+      }
+    }
+
+    .topic-list-item:last-child {
+      border-bottom: 0;
+    }
+
+    .homepage-blocks__block-container--homepage-right & {
+      .hc-topic-card__footer {
+        display: none;
+      }
+    }
+  }
+}

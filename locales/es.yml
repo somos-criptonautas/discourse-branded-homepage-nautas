@@ -1,0 +1,48 @@
+es:
+  theme_metadata:
+    description: "Página de inicio personalizada al estilo Meta, con la insignia del usuario actual"
+    settings:
+      featured_topics_tag: "Etiqueta usada para filtrar los temas destacados"
+      featured_topics_count: "Número de temas destacados que se muestran"
+      featured_list_count: "Número de temas en la lista destacada"
+      featured_list_filter: "Filtro de la lista destacada (latest, top, new, hot)"
+      leaderboard_count: "Número de usuarios que se muestran en la tabla de clasificación"
+      events_count: "Número de próximos eventos que se muestran"
+      hot_topics_count: "Número de temas calientes que se muestran"
+      cta_link: "URL del botón de llamada a la acción"
+      tier_cache_ttl: "Duración (en minutos) durante la que las insignias conseguidas se guardan en caché en el navegador. Reduce la carga del servidor al evitar volver a pedirlas en cada recarga de página. (Por defecto: 10)"
+      tiers: "Conjuntos de insignias que componen cada nivel. `name` es una clave de traducción del tema bajo `user_badge.tiers`, `badge_ids` es una lista de ids de insignia separados por comas y `group` es el grupo que desbloquea el nivel, elegido entre los grupos de este sitio. Un nivel solo se considera completo cuando se han conseguido todas las insignias de su lista; las filas se evalúan de arriba abajo."
+  hero:
+    title: "Construyamos algo grande juntos"
+    subtitle: "Una comunidad de gente que crea, piensa y hace. Pregunta, comparte ideas y sube de nivel."
+    button_label: "Empezar"
+  homepage:
+    featured_list:
+      title: "Últimas discusiones"
+      link_text: "Ver todas"
+      empty: "No se encontraron discusiones."
+    featured_topics:
+      title: "Destacados"
+      link_text: "Ver todos los destacados"
+      empty: "No se encontraron temas destacados."
+    hot_topics:
+      title: "Temas calientes"
+      link_text: "Ver todos"
+      empty: "No se encontraron temas calientes."
+    leaderboard:
+      title: "Mejores colaboradores de la semana"
+      button_label: "Ver clasificación"
+    events:
+      title: "Últimos eventos"
+      button_label: "Detalles"
+      link_label: "Ver todos los eventos"
+    cta:
+      title: "¿Listo para unirte a la conversación?"
+      description: "Crea una cuenta para preguntar, compartir lo que sabes y conectar con la comunidad."
+      button_label: "Regístrate ahora"
+  user_badge:
+    karma: "Karma"
+    tiers:
+      tier_1: "Nivel 1"
+      tier_2: "Nivel 2"
+      tier_3: "Nivel 3"

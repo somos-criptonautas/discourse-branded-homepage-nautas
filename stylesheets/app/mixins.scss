@@ -1,0 +1,27 @@
+@mixin card {
+  background: var(--secondary);
+  border: 1px solid var(--primary-200);
+  border-radius: var(--d-border-radius-large);
+  overflow: hidden;
+}
+
+@mixin card-header {
+  padding: var(--card-padding);
+  border-bottom: 1px solid var(--primary-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+@mixin card-body {
+  padding: var(--card-padding);
+}
+
+@mixin section-title {
+  font-weight: 800;
+  font-size: var(--font-up-2);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+}

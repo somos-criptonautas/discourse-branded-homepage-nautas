@@ -1,0 +1,79 @@
+featured_topics_tag:
+  default: ""
+  type: string
+
+featured_topics_count:
+  default: 3
+  type: integer
+  min: 1
+  max: 20
+
+featured_list_count:
+  default: 10
+  type: integer
+  min: 1
+  max: 30
+
+featured_list_filter:
+  default: "latest"
+  type: enum
+  choices:
+    - latest
+    - top
+    - new
+    - hot
+
+leaderboard_count:
+  default: 8
+  type: integer
+  min: 1
+  max: 20
+
+events_count:
+  default: 5
+  type: integer
+  min: 1
+  max: 15
+
+hot_topics_count:
+  default: 3
+  type: integer
+  min: 1
+  max: 10
+
+cta_link:
+  default: "/signup"
+  type: string
+
+tier_cache_ttl:
+  default: 10
+  type: integer
+  min: 1
+  max: 1440
+
+tiers:
+  type: objects
+  default:
+    - name: "user_badge.tiers.tier_1"
+      badge_ids: ""
+      group: []
+    - name: "user_badge.tiers.tier_2"
+      badge_ids: ""
+      group: []
+    - name: "user_badge.tiers.tier_3"
+      badge_ids: ""
+      group: []
+  schema:
+    name: tier
+    identifier: name
+    properties:
+      name:
+        type: string
+        required: true
+      badge_ids:
+        type: string
+        required: true
+      group:
+        type: groups
+        min: 0
+        max: 1

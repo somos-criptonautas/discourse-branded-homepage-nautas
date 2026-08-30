@@ -1,0 +1,44 @@
+.block-cta {
+  &__layout {
+    background-color: var(--skills-accent);
+    color: var(--skills-text-on-dark);
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    border-radius: var(--d-border-radius-large);
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--skills-text-on-dark);
+    max-width: 600px;
+  }
+
+  &__description {
+    font-size: var(--font-up-1);
+    opacity: 0.9;
+    line-height: var(--line-height-large);
+    margin: 0;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__button {
+    margin-top: var(--space-2);
+    background-color: var(--skills-text-on-dark);
+    color: var(--skills-accent);
+    font-weight: 700;
+    font-size: var(--font-up-1);
+    padding: 0.75em 2em;
+
+    &:hover {
+      background-color: var(--skills-warm);
+      color: var(--skills-surface-dark);
+    }
+  }
+}

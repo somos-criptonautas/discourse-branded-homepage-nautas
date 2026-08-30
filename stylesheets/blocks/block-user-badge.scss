@@ -1,0 +1,85 @@
+.block-user-badge {
+  &__layout {
+    @include card;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--card-padding);
+    color: var(--primary);
+
+    &:hover,
+    &:focus {
+      background: var(--skills-surface);
+      color: var(--skills-accent);
+      text-decoration: none;
+    }
+
+    .avatar {
+      flex: 0 0 auto;
+    }
+  }
+
+  &__identity {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    overflow: hidden;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__username {
+    color: var(--primary-medium);
+    font-size: var(--font-down-1);
+  }
+
+  &__progress {
+    padding: var(--card-padding);
+    padding-top: 0;
+  }
+
+  &__progress-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-down-1);
+    font-weight: 700;
+  }
+
+  &__progress-count {
+    color: var(--primary-medium);
+    font-weight: 400;
+  }
+
+  progress {
+    display: block;
+    appearance: none;
+    width: 100%;
+    height: 0.5rem;
+    border: none;
+    border-radius: var(--d-border-radius);
+    background: var(--skills-surface);
+    overflow: hidden;
+
+    &::-webkit-progress-bar {
+      background: var(--skills-surface);
+    }
+
+    &::-webkit-progress-value {
+      background: var(--skills-accent);
+    }
+
+    &::-moz-progress-bar {
+      background: var(--skills-accent);
+    }
+  }
+}

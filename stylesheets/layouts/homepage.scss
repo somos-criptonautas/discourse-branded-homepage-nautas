@@ -1,0 +1,68 @@
+.homepage-blocks {
+  &__layout {
+    display: grid;
+    gap: var(--space-3);
+
+    // minmax(0, …) instead of a bare fr: an auto-sized track refuses to shrink
+    // below its widest child (topic lists, long names), which is what pushed
+    // the page sideways on mobile.
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "featured-topics"
+      "featured-list"
+      "homepage-right"
+      "homepage-cta";
+    margin-block: var(--space-6);
+  }
+
+  @container homepage-blocks (width > 800px) {
+    &__layout:has(
+        .homepage-blocks__block-container--homepage-right:not(:empty)
+      ) {
+      grid-template-areas:
+        "featured-topics featured-topics"
+        "featured-list homepage-right"
+        "homepage-cta homepage-cta";
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    }
+
+    &__layout:not(
+        :has(.homepage-blocks__block-container--homepage-right:not(:empty))
+      ) {
+      grid-template-areas:
+        "featured-topics"
+        "featured-list"
+        "homepage-right"
+        "homepage-cta";
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__block {
+    &--featured-list {
+      grid-area: featured-list;
+    }
+
+    &--featured-topics {
+      grid-area: featured-topics;
+    }
+
+    &--homepage-cta {
+      grid-area: homepage-cta;
+      padding-top: 1.6rem;
+    }
+  }
+
+  &__block-container {
+    &--homepage-right {
+      grid-area: homepage-right;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+}
