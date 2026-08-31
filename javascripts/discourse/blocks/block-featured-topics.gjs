@@ -2,6 +2,7 @@ import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import { block } from "discourse/blocks";
 import AsyncContent from "discourse/components/async-content";
+import DButton from "discourse/components/d-button";
 import avatar from "discourse/helpers/avatar";
 import categoryLink from "discourse/helpers/category-link";
 import { bind } from "discourse/lib/decorators";
@@ -61,9 +62,11 @@ export default class BlockFeaturedTopics extends Component {
                 {{i18n (themePrefix @title)}}
               </h2>
               {{#if @linkUrl}}
-                <a href={{@linkUrl}} class="block-featured-topics__link">{{i18n
-                    (themePrefix @linkText)
-                  }}</a>
+                <DButton
+                  class="btn-flat block-featured-topics__link"
+                  @href={{@linkUrl}}
+                  @translatedLabel={{i18n (themePrefix @linkText)}}
+                />
               {{/if}}
             </div>
           {{/if}}

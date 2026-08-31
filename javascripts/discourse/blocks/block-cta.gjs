@@ -2,6 +2,7 @@ import Component from "@glimmer/component";
 import { block } from "discourse/blocks";
 import CookText from "discourse/components/cook-text";
 import DButton from "discourse/components/d-button";
+import dIcon from "discourse/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 
 @block("theme:branded-custom-homepage:cta", {
@@ -11,11 +12,15 @@ import { i18n } from "discourse-i18n";
     description: { type: "string" },
     buttonLabel: { type: "string" },
     buttonLink: { type: "string" },
+    icon: { type: "string" },
   },
 })
 export default class BlockCta extends Component {
   <template>
     <div class="block-cta__layout">
+      {{#if @icon}}
+        <span class="block-cta__icon">{{dIcon @icon}}</span>
+      {{/if}}
       <h2 class="block-cta__title">
         {{i18n (themePrefix @title)}}
       </h2>

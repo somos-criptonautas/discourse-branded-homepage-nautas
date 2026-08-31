@@ -10,8 +10,9 @@ es:
       events_count: "Número de próximos eventos que se muestran"
       hot_topics_count: "Número de temas calientes que se muestran"
       cta_link: "URL del botón de llamada a la acción"
-      tier_cache_ttl: "Duración (en minutos) durante la que las insignias conseguidas se guardan en caché en el navegador. Reduce la carga del servidor al evitar volver a pedirlas en cada recarga de página. (Por defecto: 10)"
-      tiers: "Conjuntos de insignias que componen cada nivel. `name` es una clave de traducción del tema bajo `user_badge.tiers`, `badge_ids` es una lista de ids de insignia separados por comas y `group` es el grupo que desbloquea el nivel, elegido entre los grupos de este sitio. Un nivel solo se considera completo cuando se han conseguido todas las insignias de su lista; las filas se evalúan de arriba abajo."
+      hero_icon: "Icono que se muestra antes del título del hero. Usa un nombre de icono de Discourse, por ejemplo `far-lightbulb`. Déjalo vacío para no mostrar ninguno."
+      hero_image: "Imagen que se muestra junto al texto del hero: a la izquierda en pantallas anchas y encima del texto en pantallas estrechas. Déjala vacía para no mostrar ninguna."
+      cta_icon: "Icono que se muestra encima del título de la llamada a la acción. Usa un nombre de icono de Discourse. Déjalo vacío para no mostrar ninguno."
   hero:
     title: "Construyamos algo grande juntos"
     subtitle: "Una comunidad de gente que crea, piensa y hace. Pregunta, comparte ideas y sube de nivel."
@@ -40,9 +41,3 @@ es:
       title: "¿Listo para unirte a la conversación?"
       description: "Crea una cuenta para preguntar, compartir lo que sabes y conectar con la comunidad."
       button_label: "Regístrate ahora"
-  user_badge:
-    karma: "Karma"
-    tiers:
-      tier_1: "Nivel 1"
-      tier_2: "Nivel 2"
-      tier_3: "Nivel 3"

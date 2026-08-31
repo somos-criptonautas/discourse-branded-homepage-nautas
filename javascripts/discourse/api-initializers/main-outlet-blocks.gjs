@@ -10,6 +10,8 @@ export default apiInitializer((api) => {
         title: "hero.title",
         subtitle: "hero.subtitle",
         buttonLabel: "hero.button_label",
+        icon: settings.hero_icon,
+        image: settings.hero_image,
         buttonLink: "/signup",
       },
       conditions: { type: "route", pages: ["HOMEPAGE"] },

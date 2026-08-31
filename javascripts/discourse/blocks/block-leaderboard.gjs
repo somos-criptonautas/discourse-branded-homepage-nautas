@@ -2,6 +2,7 @@ import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import { block } from "discourse/blocks";
 import AsyncContent from "discourse/components/async-content";
+import DButton from "discourse/components/d-button";
 import avatar from "discourse/helpers/avatar";
 import number from "discourse/helpers/number";
 import { ajax } from "discourse/lib/ajax";
@@ -61,10 +62,11 @@ export default class BlockLeaderboard extends Component {
               <h2 class="block-leaderboard__title">
                 {{i18n (themePrefix @title)}}
               </h2>
-              <a
-                href="/leaderboard/{{data.leaderboard.id}}?period={{@period}}"
-                class="block-leaderboard__link"
-              >{{i18n (themePrefix @buttonLabel)}}</a>
+              <DButton
+                class="btn-flat block-leaderboard__link"
+                @href="/leaderboard/{{data.leaderboard.id}}?period={{@period}}"
+                @translatedLabel={{i18n (themePrefix @buttonLabel)}}
+              />
             </div>
           {{/if}}
 

@@ -22,18 +22,30 @@
     white-space: nowrap;
   }
 
+  // Horizontal scroller: CSS scroll-snap only, no JS and no carousel library.
+  // Keyboard, touch and trackpad scrolling all work natively.
   &__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
     gap: var(--space-4);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--space-1);
+    padding-block-end: var(--space-2);
 
-    @include viewport.until(sm) {
-      grid-template-columns: 1fr;
+    // Room for the card hover lift, which would otherwise be clipped.
+    padding-inline: var(--space-1);
+    margin-inline: calc(var(--space-1) * -1);
+
+    @media (prefers-reduced-motion: reduce) {
+      scroll-behavior: auto;
     }
   }
 
   &__card {
     @include card;
+    flex: 0 0 clamp(260px, 78%, 320px);
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

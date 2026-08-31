@@ -10,8 +10,9 @@ en:
       events_count: "Number of upcoming events to show"
       hot_topics_count: "Number of hot topics to show"
       cta_link: "URL for the call-to-action button"
-      tier_cache_ttl: "The duration (in minutes) for which earned badges are cached in the browser. Reduces server load by preventing re-fetching on every page refresh. (Default: 10)"
-      tiers: "Badge sets that make up each tier. `name` is a theme locale key under `user_badge.tiers`, `badge_ids` is a comma-separated list of badge ids, `group` is the group unlocked by the tier, picked from the groups on this site. A tier counts as complete only when every badge in its list is earned; rows are evaluated top to bottom."
+      hero_icon: "Icon shown before the hero title. Use a Discourse icon name, e.g. `far-lightbulb`. Leave empty for none."
+      hero_image: "Image shown beside the hero text — on the left on wide screens, above the text on narrow ones. Leave empty for none."
+      cta_icon: "Icon shown above the call-to-action title. Use a Discourse icon name. Leave empty for none."
   hero:
     title: "Build something great together"
     subtitle: "A community for makers, thinkers, and doers. Ask questions, share ideas, and level up."
@@ -40,9 +41,3 @@ en:
       title: "Ready to join the conversation?"
       description: "Create an account to ask questions, share what you know, and connect with the community."
       button_label: "Sign up now"
-  user_badge:
-    karma: "Karma"
-    tiers:
-      tier_1: "Tier 1"
-      tier_2: "Tier 2"
-      tier_3: "Tier 3"
