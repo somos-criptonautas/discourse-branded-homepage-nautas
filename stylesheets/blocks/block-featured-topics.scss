@@ -70,9 +70,9 @@
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--space-1);
-    padding-block-end: var(--space-2);
 
-    // Room for the card hover lift, which would otherwise be clipped.
+    // Room for the card hover shadow, which would otherwise be clipped.
+    padding-block: var(--space-1) var(--space-2);
     padding-inline: var(--space-1);
     margin-inline: calc(var(--space-1) * -1);
 
@@ -90,13 +90,12 @@
     justify-content: space-between;
     color: var(--primary);
     text-decoration: none;
-    transition:
-      box-shadow 0.15s ease,
-      transform 0.15s ease;
+    transition: box-shadow 0.15s ease;
 
+    // Shadow only: the cards stretch to the tallest in the row, and lifting
+    // something that tall read as a jump and clipped its top border.
     &:hover {
       box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
-      transform: translateY(-2px);
     }
   }
 

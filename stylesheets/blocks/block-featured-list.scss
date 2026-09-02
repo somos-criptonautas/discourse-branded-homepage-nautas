@@ -40,6 +40,11 @@
       border-bottom: 0;
     }
 
+    // The card already provides the surface; a second one shows through it.
+    .topic-list-body {
+      background: none;
+    }
+
     .homepage-blocks__block-container--homepage-right & {
       .hc-topic-card__footer {
         display: none;
