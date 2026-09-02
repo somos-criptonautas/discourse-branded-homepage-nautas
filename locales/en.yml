@@ -2,7 +2,7 @@ en:
   theme_metadata:
     description: "Meta-styled custom homepage with current-user avatar badge"
     settings:
-      featured_topics_tag: "Tag used to filter featured topics"
+      featured_topics_tags: "Tags a member can pick between in the featured section. The first one is the default and is what signed-out visitors see."
       featured_topics_count: "Number of featured topics to display"
       featured_list_count: "Number of topics in the featured list"
       featured_list_filter: "Filter for the featured list (latest, top, new, hot)"
@@ -23,8 +23,8 @@ en:
       link_text: "View all"
       empty: "No discussions found."
     featured_topics:
-      title: "Featured"
       link_text: "See all featured"
+      change_tag: "Change the featured tag"
       empty: "No featured topics found."
     hot_topics:
       title: "Hot topics"

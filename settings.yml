@@ -1,6 +1,7 @@
-featured_topics_tag:
+featured_topics_tags:
   default: ""
-  type: string
+  type: list
+  list_type: tag
 
 featured_topics_count:
   default: 3

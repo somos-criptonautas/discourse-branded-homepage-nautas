@@ -7,17 +7,20 @@ import BlockFeaturedTopics from "../blocks/block-featured-topics";
 import BlockLeaderboard from "../blocks/block-leaderboard";
 import BlockUpcomingEvents from "../blocks/block-upcoming-events";
 
+// List settings arrive as a pipe-separated string.
+const featuredTags = (settings.featured_topics_tags || "")
+  .split("|")
+  .filter(Boolean);
+
 export default apiInitializer((api) => {
   api.renderBlocks("homepage-blocks", [
     {
       block: BlockFeaturedTopics,
       id: "featured-topics",
       args: {
-        title: "homepage.featured_topics.title",
         linkText: "homepage.featured_topics.link_text",
-        linkUrl: getURL(`/tag/${settings.featured_topics_tag}`),
         emptyMessage: "homepage.featured_topics.empty",
-        tag: settings.featured_topics_tag,
+        tags: featuredTags,
         count: settings.featured_topics_count,
       },
       conditions: [
@@ -25,7 +28,7 @@ export default apiInitializer((api) => {
         {
           type: "setting",
           source: settings,
-          name: "featured_topics_tag",
+          name: "featured_topics_tags",
           enabled: true,
         },
       ],

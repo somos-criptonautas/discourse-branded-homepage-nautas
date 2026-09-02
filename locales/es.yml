@@ -2,7 +2,7 @@ es:
   theme_metadata:
     description: "Página de inicio personalizada al estilo Meta, con la insignia del usuario actual"
     settings:
-      featured_topics_tag: "Etiqueta usada para filtrar los temas destacados"
+      featured_topics_tags: "Etiquetas entre las que un miembro puede elegir en la sección de destacados. La primera es la predeterminada y es la que ven los visitantes sin cuenta."
       featured_topics_count: "Número de temas destacados que se muestran"
       featured_list_count: "Número de temas en la lista destacada"
       featured_list_filter: "Filtro de la lista destacada (latest, top, new, hot)"
@@ -23,8 +23,8 @@ es:
       link_text: "Ver todas"
       empty: "No se encontraron discusiones."
     featured_topics:
-      title: "Destacados"
       link_text: "Ver todos los destacados"
+      change_tag: "Cambiar la etiqueta destacada"
       empty: "No se encontraron temas destacados."
     hot_topics:
       title: "Temas calientes"

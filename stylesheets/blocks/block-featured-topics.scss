@@ -14,6 +14,49 @@
 
   &__heading {
     @include section-title;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  // The picker is a button living inside the heading, so it takes the
+  // heading's type instead of the .btn defaults.
+  &__picker.btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+
+    .d-icon {
+      color: var(--primary-medium);
+      font-size: var(--font-down-2);
+      transition: transform 0.15s ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      background: none;
+      color: var(--skills-accent);
+
+      .d-icon {
+        color: var(--skills-accent);
+      }
+    }
+
+    // Applied by float-kit to the trigger while the menu is open.
+    &.-expanded .d-icon {
+      transform: rotate(180deg);
+    }
   }
 
   &__link {
@@ -111,5 +154,17 @@
     align-items: center;
     gap: var(--space-2);
     font-weight: 600;
+  }
+}
+
+// The menu content is portaled out of the block, so this cannot be nested
+// inside .block-featured-topics.
+.block-featured-topics__tag-option {
+  width: 100%;
+  justify-content: flex-start;
+
+  // Keeps every label on the same left edge; only the active row shows a tick.
+  &.--unselected .d-icon {
+    visibility: hidden;
   }
 }
