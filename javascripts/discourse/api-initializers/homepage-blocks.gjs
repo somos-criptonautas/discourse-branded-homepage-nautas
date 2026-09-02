@@ -1,5 +1,6 @@
 import BlockGroup from "discourse/blocks/builtin/block-group";
 import { apiInitializer } from "discourse/lib/api";
+import getURL from "discourse/lib/get-url";
 import BlockCta from "../blocks/block-cta";
 import BlockFeaturedList from "../blocks/block-featured-list";
 import BlockFeaturedTopics from "../blocks/block-featured-topics";
@@ -14,7 +15,7 @@ export default apiInitializer((api) => {
       args: {
         title: "homepage.featured_topics.title",
         linkText: "homepage.featured_topics.link_text",
-        linkUrl: `/tag/${settings.featured_topics_tag}`,
+        linkUrl: getURL(`/tag/${settings.featured_topics_tag}`),
         emptyMessage: "homepage.featured_topics.empty",
         tag: settings.featured_topics_tag,
         count: settings.featured_topics_count,
@@ -35,7 +36,7 @@ export default apiInitializer((api) => {
       args: {
         title: "homepage.featured_list.title",
         linkText: "homepage.featured_list.link_text",
-        linkUrl: "/latest",
+        linkUrl: getURL("/latest"),
         count: settings.featured_list_count,
         filter: settings.featured_list_filter,
         emptyMessage: "homepage.featured_list.empty",
@@ -54,7 +55,7 @@ export default apiInitializer((api) => {
             count: settings.events_count,
             buttonLabel: "homepage.events.button_label",
             linkLabel: "homepage.events.link_label",
-            linkUrl: "/upcoming-events",
+            linkUrl: getURL("/upcoming-events"),
           },
           conditions: {
             type: "setting",
@@ -68,7 +69,7 @@ export default apiInitializer((api) => {
           args: {
             title: "homepage.hot_topics.title",
             linkText: "homepage.hot_topics.link_text",
-            linkUrl: "/hot",
+            linkUrl: getURL("/hot"),
             count: settings.hot_topics_count,
             filter: "hot",
             emptyMessage: "homepage.hot_topics.empty",
@@ -99,9 +100,10 @@ export default apiInitializer((api) => {
         title: "homepage.cta.title",
         description: "homepage.cta.description",
         buttonLabel: "homepage.cta.button_label",
-        buttonLink: settings.cta_link,
+        buttonLink: getURL(settings.cta_link),
         icon: settings.cta_icon,
       },
+      conditions: { type: "user", loggedIn: false },
     },
   ]);
 });

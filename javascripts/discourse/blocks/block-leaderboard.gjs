@@ -7,6 +7,7 @@ import avatar from "discourse/helpers/avatar";
 import number from "discourse/helpers/number";
 import { ajax } from "discourse/lib/ajax";
 import { bind } from "discourse/lib/decorators";
+import getURL from "discourse/lib/get-url";
 import { or } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 
@@ -25,15 +26,13 @@ export default class BlockLeaderboard extends Component {
   @bind
   async fetchLeaderboard() {
     const count = this.args.count || 8;
-    let data;
+    const period = this.args.period || "weekly";
 
-    try {
-      data = await ajax("/leaderboard", {
-        data: { period: this.args.period, user_limit: count },
-      });
-    } catch {
-      return null;
-    }
+    // No try/catch: a rejection is handed to AsyncContent, which surfaces it.
+    // Swallowing it returned null, which rendered nothing and reported nothing.
+    const data = await ajax("/leaderboard", {
+      data: { period, user_limit: count },
+    });
 
     const users = (data.users || []).map((user, index) => ({
       ...user,
@@ -46,6 +45,7 @@ export default class BlockLeaderboard extends Component {
       users,
       personal: data.personal,
       currentUserNotInTop: data.personal?.position > count,
+      url: getURL(`/leaderboard/${data.leaderboard.id}?period=${period}`),
     };
   }
 
@@ -64,7 +64,7 @@ export default class BlockLeaderboard extends Component {
               </h2>
               <DButton
                 class="btn-flat block-leaderboard__link"
-                @href="/leaderboard/{{data.leaderboard.id}}?period={{@period}}"
+                @href={{data.url}}
                 @translatedLabel={{i18n (themePrefix @buttonLabel)}}
               />
             </div>

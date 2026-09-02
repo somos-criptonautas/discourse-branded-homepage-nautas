@@ -5,6 +5,7 @@ import AsyncContent from "discourse/components/async-content";
 import BasicTopicList from "discourse/components/basic-topic-list";
 import DButton from "discourse/components/d-button";
 import { bind } from "discourse/lib/decorators";
+import { and } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 
 @block("theme:branded-custom-homepage:featured-list", {
@@ -27,11 +28,14 @@ export default class BlockFeaturedList extends Component {
     const filter = this.args.filter || "latest";
     const count = this.args.count || 10;
 
-    const topicList = await this.store.findFiltered("topicList", { filter });
-    if (!topicList.topics?.length) {
-      return null;
-    }
-    return topicList.topics.slice(0, count);
+    // per_page keeps the server from serializing a full page of 30 topics
+    // that we would only throw away client-side.
+    const topicList = await this.store.findFiltered("topicList", {
+      filter,
+      params: { per_page: count },
+    });
+
+    return topicList.topics?.length ? topicList.topics.slice(0, count) : null;
   }
 
   <template>
@@ -57,7 +61,7 @@ export default class BlockFeaturedList extends Component {
               <h2 class="block-featured-list__title">
                 {{i18n (themePrefix @title)}}
               </h2>
-              {{#if @linkUrl}}
+              {{#if (and @linkUrl @linkText)}}
                 <DButton
                   class="btn-flat block-featured-list__link"
                   @href={{@linkUrl}}

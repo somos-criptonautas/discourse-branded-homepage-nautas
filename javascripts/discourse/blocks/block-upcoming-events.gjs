@@ -5,8 +5,18 @@ import DButton from "discourse/components/d-button";
 import { ajax } from "discourse/lib/ajax";
 import { bind } from "discourse/lib/decorators";
 import { longDate, shortDateNoYear } from "discourse/lib/formatter";
-import { or } from "discourse/truth-helpers";
+import { and, or } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
+
+// Module-level, not class methods: a method referenced as `{{this.method arg}}`
+// is invoked as a plain function, so `this` would be unbound inside it.
+function getShortDate(startsAt) {
+  return shortDateNoYear(new Date(startsAt));
+}
+
+function getLongDate(startsAt) {
+  return longDate(new Date(startsAt));
+}
 
 @block("theme:branded-custom-homepage:upcoming-events", {
   description: "Upcoming events from discourse-post-event plugin",
@@ -21,27 +31,14 @@ import { i18n } from "discourse-i18n";
 export default class BlockUpcomingEvents extends Component {
   @bind
   async fetchEvents() {
-    const count = this.args.count || 5;
-    let results;
+    // Leading slash: without it the path resolves against the current route.
+    // `limit` is applied server-side by EventFinder, so no over-fetch.
+    const { events } = await ajax("/discourse-post-event/events", {
+      data: { limit: this.args.count || 5 },
+    });
 
-    try {
-      results = await ajax("discourse-post-event/events");
-    } catch {
-      return null;
-    }
-
-    if (!results.events?.length) {
-      return null;
-    }
-    return results.events.slice(0, count);
-  }
-
-  getShortDate(startsAt) {
-    return shortDateNoYear(new Date(startsAt));
-  }
-
-  getLongDate(startsAt) {
-    return longDate(new Date(startsAt));
+    // An empty array is truthy, so it would never reach the `:empty` block.
+    return events?.length ? events : null;
   }
 
   <template>
@@ -69,25 +66,27 @@ export default class BlockUpcomingEvents extends Component {
             {{#each events as |event|}}
               <div class="block-upcoming-events__event">
                 <span class="block-upcoming-events__date-badge">
-                  {{this.getShortDate event.starts_at}}
+                  {{getShortDate event.starts_at}}
                 </span>
                 <div class="block-upcoming-events__event-info">
                   <h3 class="block-upcoming-events__event-title">
                     {{or event.name event.post.topic.title}}
                   </h3>
                   <span class="block-upcoming-events__event-long-date">
-                    {{this.getLongDate event.starts_at}}
+                    {{getLongDate event.starts_at}}
                   </span>
                 </div>
-                <DButton
-                  class="btn-flat"
-                  @href={{event.post.url}}
-                  @translatedLabel={{i18n (themePrefix @buttonLabel)}}
-                />
+                {{#if @buttonLabel}}
+                  <DButton
+                    class="btn-flat"
+                    @href={{event.post.url}}
+                    @translatedLabel={{i18n (themePrefix @buttonLabel)}}
+                  />
+                {{/if}}
               </div>
             {{/each}}
           </div>
-          {{#if @linkUrl}}
+          {{#if (and @linkUrl @linkLabel)}}
             <DButton
               class="btn-default block-upcoming-events__link"
               @href={{@linkUrl}}
