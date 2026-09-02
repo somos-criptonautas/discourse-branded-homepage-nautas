@@ -11,9 +11,11 @@ Discourse theme component that adds Meta-style custom homepage blocks.
 
 ## Featured tag
 
-Set `featured_topics_tags` to one or more tags. The first is the default and is
-what signed-out visitors see. When more than one is set, signed-in members get a
-dropdown on the section heading and their pick is remembered in their browser.
+Set `featured_topics_tags` and/or `featured_topics_categories`. Tags come first,
+then categories; the first entry is the default and is what signed-out visitors
+see. When more than one is available, signed-in members get a dropdown on the
+section heading and their pick is remembered in their browser. Categories the
+viewer cannot access never appear.
 
 Leaderboard and event cards appear only when their respective Discourse
 features are enabled. When attached to Horizon, homepage topic lists use its

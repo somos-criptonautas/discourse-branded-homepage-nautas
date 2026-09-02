@@ -8,9 +8,10 @@ import BlockLeaderboard from "../blocks/block-leaderboard";
 import BlockUpcomingEvents from "../blocks/block-upcoming-events";
 
 // List settings arrive as a pipe-separated string.
-const featuredTags = (settings.featured_topics_tags || "")
-  .split("|")
-  .filter(Boolean);
+const asList = (value) => (value || "").split("|").filter(Boolean);
+
+const featuredTags = asList(settings.featured_topics_tags);
+const featuredCategoryIds = asList(settings.featured_topics_categories);
 
 export default apiInitializer((api) => {
   api.renderBlocks("homepage-blocks", [
@@ -21,17 +22,27 @@ export default apiInitializer((api) => {
         linkText: "homepage.featured_topics.link_text",
         emptyMessage: "homepage.featured_topics.empty",
         tags: featuredTags,
+        categoryIds: featuredCategoryIds,
         count: settings.featured_topics_count,
       },
-      conditions: [
-        { type: "setting", name: "tagging_enabled", enabled: true },
-        {
-          type: "setting",
-          source: settings,
-          name: "featured_topics_tags",
-          enabled: true,
-        },
-      ],
+      // The block renders nothing when neither list resolves to anything, so
+      // one "is either configured" check is enough here.
+      conditions: {
+        any: [
+          {
+            type: "setting",
+            source: settings,
+            name: "featured_topics_tags",
+            enabled: true,
+          },
+          {
+            type: "setting",
+            source: settings,
+            name: "featured_topics_categories",
+            enabled: true,
+          },
+        ],
+      },
     },
     {
       block: BlockFeaturedList,

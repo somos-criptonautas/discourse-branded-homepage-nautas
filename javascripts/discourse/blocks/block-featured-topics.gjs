@@ -14,18 +14,20 @@ import dIcon from "discourse/helpers/d-icon";
 import { bind } from "discourse/lib/decorators";
 import getURL from "discourse/lib/get-url";
 import KeyValueStore from "discourse/lib/key-value-store";
+import Category from "discourse/models/category";
 import { eq } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 
 // localStorage, so a member's pick survives the session and the next visit.
 // Nothing is written to the user's preferences or to the server.
 const preferences = new KeyValueStore("branded_custom_homepage_");
-const TAG_KEY = "featured_tag";
+const SOURCE_KEY = "featured_source";
 
 @block("theme:branded-custom-homepage:featured-topics", {
-  description: "Card grid of topics filtered by a selectable tag",
+  description: "Card grid of topics from a selectable tag or category",
   args: {
     tags: { type: "array", itemType: "string" },
+    categoryIds: { type: "array", itemType: "string" },
     linkText: { type: "string" },
     count: { type: "number", default: 6 },
     filter: { type: "string", default: "latest" },
@@ -34,47 +36,60 @@ const TAG_KEY = "featured_tag";
 })
 export default class BlockFeaturedTopics extends Component {
   @service store;
+  @service site;
   @service currentUser;
 
-  @tracked selectedTag = this.#initialTag();
+  @tracked selectedKey = this.currentUser ? preferences.get(SOURCE_KEY) : null;
 
-  get tags() {
-    return this.args.tags ?? [];
+  get options() {
+    const filter = this.args.filter || "latest";
+
+    const tags = (this.args.tags ?? []).map((tag) => ({
+      key: `t:${tag}`,
+      label: tag,
+      filter: `tag/${tag}/l/${filter}`,
+      url: getURL(`/tag/${tag}`),
+    }));
+
+    const categories = (this.args.categoryIds ?? [])
+      .map((id) => this.site.categoriesById.get(Number(id)))
+      // A category the viewer cannot see is absent from the site's serialized
+      // category list, so dropping the misses *is* the access check.
+      .filter(Boolean)
+      .map((category) => ({
+        key: `c:${category.id}`,
+        label: category.name,
+        filter: `c/${Category.slugFor(category)}/${category.id}/l/${filter}`,
+        url: category.url,
+      }));
+
+    return [...tags, ...categories];
   }
 
-  // Anonymous visitors always get the first configured tag; only members
-  // choose, and only when there is more than one tag to choose between.
+  // Falls back to the first option when nothing is stored, or when the stored
+  // one has since left the setting or the viewer's reach.
+  get selected() {
+    return (
+      this.options.find((o) => o.key === this.selectedKey) ?? this.options[0]
+    );
+  }
+
+  // Anonymous visitors always get the first option; only members choose, and
+  // only when there is more than one thing to choose between.
   get canSwitch() {
-    return !!this.currentUser && this.tags.length > 1;
-  }
-
-  get linkUrl() {
-    return getURL(`/tag/${this.selectedTag}`);
-  }
-
-  #initialTag() {
-    if (this.currentUser) {
-      const saved = preferences.get(TAG_KEY);
-      // A saved tag that has since been dropped from the setting falls back
-      // to the first one rather than fetching a list nobody configured.
-      if (saved && this.args.tags?.includes(saved)) {
-        return saved;
-      }
-    }
-    return this.args.tags?.[0];
+    return !!this.currentUser && this.options.length > 1;
   }
 
   @action
-  selectTag(tag, close) {
-    this.selectedTag = tag;
-    preferences.set({ key: TAG_KEY, value: tag });
+  select(key, close) {
+    this.selectedKey = key;
+    preferences.set({ key: SOURCE_KEY, value: key });
     close?.();
   }
 
   @bind
-  async fetchTopics(tag) {
+  async fetchTopics(filter) {
     const count = this.args.count || 6;
-    const filter = `tag/${tag}/l/${this.args.filter || "latest"}`;
 
     const topicList = await this.store.findFiltered("topicList", {
       filter,
@@ -85,37 +100,34 @@ export default class BlockFeaturedTopics extends Component {
   }
 
   <template>
-    {{#if this.selectedTag}}
+    {{#if this.selected}}
       <div class="block-featured-topics__layout">
         {{! The header sits outside AsyncContent so the picker stays reachable
-            when the selected tag turns up empty. }}
+            when the selected source turns up empty. }}
         <div class="block-featured-topics__header">
           <h2 class="block-featured-topics__heading">
             {{#if this.canSwitch}}
               <DMenu
-                @identifier="featured-topics-tag"
+                @identifier="featured-topics-source"
                 @modalForMobile={{true}}
                 @triggerClass="block-featured-topics__picker"
                 @ariaLabel={{i18n
-                  (themePrefix "homepage.featured_topics.change_tag")
+                  (themePrefix "homepage.featured_topics.change_source")
                 }}
               >
                 <:trigger>
-                  <span class="block-featured-topics__picker-name">
-                    {{this.selectedTag}}
-                  </span>
+                  {{this.selected.label}}
                   {{dIcon "angle-down"}}
                 </:trigger>
                 <:content as |menu|>
                   <DropdownMenu as |dropdown|>
-                    {{#each this.tags as |tag|}}
+                    {{#each this.options as |option|}}
                       <dropdown.item>
                         <DButton
-                          class="btn-transparent block-featured-topics__tag-option
-                            {{unless (eq tag this.selectedTag) '--unselected'}}"
-                          @icon="check"
-                          @translatedLabel={{tag}}
-                          @action={{fn this.selectTag tag menu.close}}
+                          class="btn-transparent block-featured-topics__option
+                            {{if (eq option.key this.selected.key) '--active'}}"
+                          @translatedLabel={{option.label}}
+                          @action={{fn this.select option.key menu.close}}
                         />
                       </dropdown.item>
                     {{/each}}
@@ -123,14 +135,14 @@ export default class BlockFeaturedTopics extends Component {
                 </:content>
               </DMenu>
             {{else}}
-              {{this.selectedTag}}
+              {{this.selected.label}}
             {{/if}}
           </h2>
 
           {{#if @linkText}}
             <DButton
               class="btn-flat block-featured-topics__link"
-              @href={{this.linkUrl}}
+              @href={{this.selected.url}}
               @translatedLabel={{i18n (themePrefix @linkText)}}
             />
           {{/if}}
@@ -138,7 +150,7 @@ export default class BlockFeaturedTopics extends Component {
 
         <AsyncContent
           @asyncData={{this.fetchTopics}}
-          @context={{this.selectedTag}}
+          @context={{this.selected.filter}}
           @retainWhileReloading={{true}}
         >
           <:loading>

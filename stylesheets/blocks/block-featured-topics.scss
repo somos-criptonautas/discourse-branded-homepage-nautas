@@ -43,14 +43,10 @@
       }
     }
 
+    // Core's mobile list-control toggle keeps its colour on hover; so does this.
     &:hover,
     &:focus {
       background: none;
-      color: var(--skills-accent);
-
-      .d-icon {
-        color: var(--skills-accent);
-      }
     }
 
     // Applied by float-kit to the trigger while the menu is open.
@@ -158,13 +154,15 @@
 }
 
 // The menu content is portaled out of the block, so this cannot be nested
-// inside .block-featured-topics.
-.block-featured-topics__tag-option {
+// inside .block-featured-topics. Selected state mirrors core's mobile
+// latest/hot/new dropdown.
+.block-featured-topics__option {
   width: 100%;
   justify-content: flex-start;
 
-  // Keeps every label on the same left edge; only the active row shows a tick.
-  &.--unselected .d-icon {
-    visibility: hidden;
+  &.--active {
+    background: var(--d-selected);
+    color: var(--d-selected-text-color);
+    font-weight: bold;
   }
 }

@@ -3,6 +3,11 @@ featured_topics_tags:
   type: list
   list_type: tag
 
+featured_topics_categories:
+  default: ""
+  type: list
+  list_type: category
+
 featured_topics_count:
   default: 3
   type: integer
