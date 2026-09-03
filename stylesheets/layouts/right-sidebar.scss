@@ -1,0 +1,18 @@
+// discourse-right-sidebar-blocks renders every block as
+// .tc-right-sidebar > .rs-component and gives it no surface of its own. The
+// same card treatment as the homepage blocks makes both columns read as one
+// system. The rule matches nothing when that component isn't installed.
+.tc-right-sidebar .rs-component {
+  @include card;
+  @include card-body;
+
+  // The block's own heading becomes the card header. Those blocks have no body
+  // wrapper — heading, content and any view-all link are flat siblings — so the
+  // heading is pulled back out to the card edges rather than padding each
+  // sibling separately. Negating --card-padding by hand: it is a shorthand, so
+  // its two halves can't be referenced individually.
+  > h3 {
+    @include card-header;
+    margin: calc(var(--space-4) * -1) calc(var(--space-5) * -1) var(--space-4);
+  }
+}
