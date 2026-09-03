@@ -16,3 +16,73 @@
     margin: calc(var(--space-4) * -1) calc(var(--space-5) * -1) var(--space-4);
   }
 }
+
+// A block with nothing to show should disappear rather than render an empty
+// card. discourse-calendar's upcoming events list swaps its list for this
+// message, which is the only thing left in the block once it loads.
+.tc-right-sidebar .rs-component:has(.upcoming-events-list__empty-message) {
+  display: none;
+}
+
+// discourse-gamification's minimal leaderboard wraps its title in .page__header
+// rather than exposing a bare h3, so the heading rule above misses it. Give it
+// the same header and match the homepage leaderboard's rows.
+.tc-right-sidebar .rs-component .leaderboard.-minimal {
+  .page__header {
+    @include card-header;
+    margin: calc(var(--space-4) * -1) calc(var(--space-5) * -1) var(--space-4);
+  }
+
+  .page__title {
+    margin: 0;
+  }
+
+  // Rank/score column labels: the homepage card has no such row.
+  .ranking-col-names {
+    display: none;
+  }
+
+  .user {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 0;
+    border-radius: var(--d-border-radius);
+
+    &:hover {
+      background-color: var(--skills-surface);
+    }
+
+    &.user-highlight {
+      background-color: var(--skills-accent-light);
+    }
+  }
+
+  .user__rank {
+    font-size: var(--font-0);
+    font-weight: 700;
+    color: var(--primary-medium);
+
+    // First place renders a gold crown icon instead of a number. Every other
+    // row is numbered, so put the number back: the plugin sets -winner on
+    // index 0 only, which is always rank 1.
+    &.-winner {
+      color: var(--primary-medium);
+
+      .d-icon {
+        display: none;
+      }
+
+      &::before {
+        content: "1";
+      }
+    }
+  }
+
+  .user__name {
+    font-weight: 600;
+  }
+
+  .user__score {
+    font-size: var(--font-0);
+    font-variant-numeric: tabular-nums;
+  }
+}
