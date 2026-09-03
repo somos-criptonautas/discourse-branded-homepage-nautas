@@ -1,22 +1,22 @@
 # Branded Custom Homepage
 
-Discourse theme component that adds Meta-style custom homepage blocks.
+Discourse theme component with Meta-style homepage blocks. Adapted from
+[discourse/discourse-theme-skills](https://github.com/discourse/discourse-theme-skills).
 
-## Installation
+## Features
 
-1. Upload component in **Admin > Customize > Themes**.
-2. Attach it to your active theme.
-3. Set site setting `homepage` to `custom`.
-4. Visit `/` or `/custom` while signed in.
+- **Featured topics** — horizontal card scroller. Members pick the tag or
+  category from a dropdown; the choice is remembered per browser.
+- **Latest discussions** and **hot topics** lists, using Horizon's topic cards
+  when attached to it.
+- **Weekly leaderboard** and **upcoming events**, each shown only when its
+  plugin is enabled.
+- **Sign-up call to action** for signed-out visitors.
+- **Card treatment for right-sidebar blocks**, so
+  [discourse-right-sidebar-blocks](https://github.com/discourse/discourse-right-sidebar-blocks)
+  matches the homepage.
 
-## Featured tag
+## Install
 
-Set `featured_topics_tags` and/or `featured_topics_categories`. Tags come first,
-then categories; the first entry is the default and is what signed-out visitors
-see. When more than one is available, signed-in members get a dropdown on the
-section heading and their pick is remembered in their browser. Categories the
-viewer cannot access never appear.
-
-Leaderboard and event cards appear only when their respective Discourse
-features are enabled. When attached to Horizon, homepage topic lists use its
-high-context topic cards through the standard `discovery` list context.
+Upload in **Admin > Customize > Themes**, attach it to your active theme, and
+set the `homepage` site setting to `custom`.

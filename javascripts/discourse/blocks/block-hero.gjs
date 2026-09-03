@@ -1,8 +1,8 @@
 import Component from "@glimmer/component";
 import { block } from "discourse/blocks";
 import CookText from "discourse/components/cook-text";
-import DButton from "discourse/components/d-button";
-import dIcon from "discourse/helpers/d-icon";
+import DButton from "discourse/ui-kit/d-button";
+import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 
 @block("theme:branded-custom-homepage:hero", {

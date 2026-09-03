@@ -4,13 +4,13 @@ import { fn } from "@ember/helper";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { block } from "discourse/blocks";
-import AsyncContent from "discourse/components/async-content";
-import DButton from "discourse/components/d-button";
+import DAsyncContent from "discourse/ui-kit/d-async-content";
+import DButton from "discourse/ui-kit/d-button";
 import DropdownMenu from "discourse/components/dropdown-menu";
 import DMenu from "discourse/float-kit/components/d-menu";
-import avatar from "discourse/helpers/avatar";
-import categoryLink from "discourse/helpers/category-link";
-import dIcon from "discourse/helpers/d-icon";
+import dAvatar from "discourse/ui-kit/helpers/d-avatar";
+import dCategoryLink from "discourse/ui-kit/helpers/d-category-link";
+import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { bind } from "discourse/lib/decorators";
 import getURL from "discourse/lib/get-url";
 import KeyValueStore from "discourse/lib/key-value-store";
@@ -148,7 +148,7 @@ export default class BlockFeaturedTopics extends Component {
           {{/if}}
         </div>
 
-        <AsyncContent
+        <DAsyncContent
           @asyncData={{this.fetchTopics}}
           @context={{this.selected.filter}}
           @retainWhileReloading={{true}}
@@ -189,16 +189,16 @@ export default class BlockFeaturedTopics extends Component {
                   </div>
                   <div class="block-featured-topics__card-meta">
                     <div class="block-featured-topics__card-author">
-                      {{avatar topic.creator imageSize="tiny"}}
+                      {{dAvatar topic.creator imageSize="tiny"}}
                       <span>{{topic.creator.username}}</span>
                     </div>
-                    {{categoryLink topic.category}}
+                    {{dCategoryLink topic.category}}
                   </div>
                 </a>
               {{/each}}
             </div>
           </:content>
-        </AsyncContent>
+        </DAsyncContent>
       </div>
     {{/if}}
   </template>

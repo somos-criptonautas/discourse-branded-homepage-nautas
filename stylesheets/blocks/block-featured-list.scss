@@ -20,10 +20,9 @@
     white-space: nowrap;
   }
 
-  // Same card treatment as the featured cards and the leaderboard; the header
-  // stays outside the box.
+  // Same panel treatment as the leaderboard; the header stays outside the box.
   &__list {
-    @include card;
+    @include panel;
 
     .topic-list {
       margin: 0;

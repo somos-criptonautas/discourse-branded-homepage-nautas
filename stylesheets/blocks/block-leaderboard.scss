@@ -24,8 +24,8 @@
   }
 
   &__list {
-    @include card;
-    @include card-body;
+    @include panel;
+    @include panel-body;
     display: flex;
     flex-direction: column;
     gap: var(--space-2);

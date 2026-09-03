@@ -1,10 +1,10 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import { block } from "discourse/blocks";
-import AsyncContent from "discourse/components/async-content";
-import DButton from "discourse/components/d-button";
-import avatar from "discourse/helpers/avatar";
-import number from "discourse/helpers/number";
+import DAsyncContent from "discourse/ui-kit/d-async-content";
+import DButton from "discourse/ui-kit/d-button";
+import dAvatar from "discourse/ui-kit/helpers/d-avatar";
+import dNumber from "discourse/ui-kit/helpers/d-number";
 import { ajax } from "discourse/lib/ajax";
 import { bind } from "discourse/lib/decorators";
 import getURL from "discourse/lib/get-url";
@@ -50,7 +50,7 @@ export default class BlockLeaderboard extends Component {
   }
 
   <template>
-    <AsyncContent @asyncData={{this.fetchLeaderboard}}>
+    <DAsyncContent @asyncData={{this.fetchLeaderboard}}>
       <:loading>
         <div class="block-leaderboard__loading"><div class="spinner" /></div>
       </:loading>
@@ -80,7 +80,7 @@ export default class BlockLeaderboard extends Component {
                   {{i18n "gamification.you"}}
                 </span>
                 <span class="block-leaderboard__score">
-                  {{number data.personal.user.total_score}}
+                  {{dNumber data.personal.user.total_score}}
                 </span>
               </div>
             {{/if}}
@@ -94,7 +94,7 @@ export default class BlockLeaderboard extends Component {
                   class="block-leaderboard__user"
                   data-user-card={{rank.username}}
                 >
-                  {{avatar rank imageSize="small"}}
+                  {{dAvatar rank imageSize="small"}}
                   <span class="block-leaderboard__name">
                     {{#if this.siteSettings.prioritize_username_in_ux}}
                       {{rank.username}}
@@ -104,13 +104,13 @@ export default class BlockLeaderboard extends Component {
                   </span>
                 </div>
                 <span class="block-leaderboard__score">
-                  {{number rank.total_score}}
+                  {{dNumber rank.total_score}}
                 </span>
               </div>
             {{/each}}
           </div>
         </div>
       </:content>
-    </AsyncContent>
+    </DAsyncContent>
   </template>
 }
