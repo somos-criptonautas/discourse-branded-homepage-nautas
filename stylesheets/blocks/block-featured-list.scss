@@ -20,10 +20,9 @@
     white-space: nowrap;
   }
 
-  // Same panel treatment as the leaderboard; the header stays outside the box.
+  // No panel chrome here: the topic cards inside bring their own surface, and a
+  // frame around them showed through as a doubled background.
   &__list {
-    @include panel;
-
     .topic-list {
       margin: 0;
 

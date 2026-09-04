@@ -1,40 +1,60 @@
 // discourse-right-sidebar-blocks renders every block as
 // .tc-right-sidebar > .rs-component and gives it no surface of its own. The
 // same panel treatment as the homepage blocks makes both columns read as one
-// system. The rule matches nothing when that component isn't installed.
-.tc-right-sidebar .rs-component {
-  @include panel;
-  @include panel-body;
+// system. These rules match nothing when that component isn't installed.
+.tc-right-sidebar {
+  padding-top: 0.5rem;
 
-  // The block's own heading becomes the panel header. Those blocks have no body
-  // wrapper — heading, content and any view-all link are flat siblings — so the
-  // heading is pulled back out to the panel edges rather than padding each
-  // sibling separately. Negating --card-padding by hand: it is a shorthand, so
-  // its two halves can't be referenced individually.
-  > h3 {
-    @include panel-header;
-    margin: calc(var(--space-4) * -1) calc(var(--space-5) * -1) var(--space-4);
+  .rs-component {
+    @include panel;
+
+    // Tighter than --card-padding: the sidebar column is narrow, and the
+    // homepage padding wasted most of it.
+    padding: var(--space-3) var(--space-4);
+
+    // The block's own heading. No divider and no full-bleed: a rule across a
+    // panel this narrow reads as clutter. Overrides the host component, which
+    // draws its own border-bottom here.
+    > h3 {
+      margin: 0 0 var(--space-2);
+      padding: 0;
+      border-bottom: 0;
+      font-size: var(--font-0);
+      font-weight: 700;
+    }
+
+    // Section links stay plain, like the homepage headers — the host and some
+    // blocks colour them as accents.
+    > h3 a,
+    .page__header a,
+    .top-contributors--view-all {
+      color: inherit;
+      font-weight: inherit;
+    }
+  }
+
+  // A block with nothing to show should disappear rather than render an empty
+  // panel. discourse-calendar's upcoming events list swaps its list for this
+  // message, which is the only thing left in the block once it loads.
+  .rs-component:has(.upcoming-events-list__empty-message) {
+    display: none;
   }
 }
 
-// A block with nothing to show should disappear rather than render an empty
-// panel. discourse-calendar's upcoming events list swaps its list for this
-// message, which is the only thing left in the block once it loads.
-.tc-right-sidebar .rs-component:has(.upcoming-events-list__empty-message) {
-  display: none;
-}
-
 // discourse-gamification's minimal leaderboard wraps its title in .page__header
-// rather than exposing a bare h3, so the heading rule above misses it. Give it
-// the same header and match the homepage leaderboard's rows.
+// rather than exposing a bare h3, so the heading rule above misses it. Match it
+// to the same heading, and the rows to the homepage leaderboard.
 .tc-right-sidebar .rs-component .leaderboard.-minimal {
   .page__header {
-    @include panel-header;
-    margin: calc(var(--space-4) * -1) calc(var(--space-5) * -1) var(--space-4);
+    margin: 0 0 var(--space-2);
+    padding: 0;
+    border-bottom: 0;
   }
 
   .page__title {
     margin: 0;
+    font-size: var(--font-0);
+    font-weight: 700;
   }
 
   // Rank/score column labels: the homepage card has no such row.
@@ -43,7 +63,7 @@
   }
 
   .user {
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2);
     border-bottom: 0;
     border-radius: var(--d-border-radius);
 
