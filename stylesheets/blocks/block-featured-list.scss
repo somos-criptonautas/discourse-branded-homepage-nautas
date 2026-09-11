@@ -13,6 +13,12 @@
     // Half the card padding, and the same inline value as the cells below, so
     // the title lines up with the first column and the list keeps its width.
     padding: var(--space-2);
+
+    // Mobile: core's page padding and the cards' own padding already frame the
+    // list, so this one only costs width.
+    @include viewport.until(md) {
+      padding-inline: 0;
+    }
   }
 
   &__title {
@@ -32,6 +38,10 @@
       th,
       td {
         padding-inline: var(--space-2);
+
+        @include viewport.until(md) {
+          padding-inline: 0;
+        }
       }
     }
 
