@@ -9,7 +9,10 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
-    padding: var(--card-padding);
+
+    // Half the card padding, and the same inline value as the cells below, so
+    // the title lines up with the first column and the list keeps its width.
+    padding: var(--space-2);
   }
 
   &__title {
@@ -28,7 +31,7 @@
 
       th,
       td {
-        padding-inline: var(--space-4);
+        padding-inline: var(--space-2);
       }
     }
 
