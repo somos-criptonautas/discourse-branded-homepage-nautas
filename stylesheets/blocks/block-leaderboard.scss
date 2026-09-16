@@ -4,8 +4,8 @@
     flex-direction: column;
   }
 
-  // Header sits outside the box, like the other blocks. The card wraps the
-  // content only.
+  // Header sits outside the async content so the period picker survives
+  // reloads — exactly like block-featured-topics.
   &__header {
     display: flex;
     align-items: center;
@@ -14,9 +14,17 @@
     padding: var(--card-padding);
   }
 
-  &__title {
+  &__heading {
     @include section-title;
-    font-size: var(--font-up-1);
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  // The picker is a button living inside the heading, so it takes the
+  // heading's type instead of the .btn defaults.
+  &__picker.btn {
+    @include section-picker;
   }
 
   &__link {
@@ -79,4 +87,11 @@
   &__score {
     font-variant-numeric: tabular-nums;
   }
+}
+
+// The menu content is portaled out of the block, so this cannot be nested
+// inside .block-leaderboard. Selected state mirrors core's mobile
+// latest/hot/new dropdown.
+.block-leaderboard__option {
+  @include section-picker-option;
 }

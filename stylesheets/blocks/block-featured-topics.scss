@@ -22,37 +22,7 @@
   // The picker is a button living inside the heading, so it takes the
   // heading's type instead of the .btn defaults.
   &__picker.btn {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: 0;
-    background: none;
-    border: none;
-    color: var(--primary);
-    font: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-
-    .d-icon {
-      color: var(--primary-medium);
-      font-size: var(--font-down-2);
-      transition: transform 0.15s ease;
-
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-      }
-    }
-
-    // Core's mobile list-control toggle keeps its colour on hover; so does this.
-    &:hover,
-    &:focus {
-      background: none;
-    }
-
-    // Applied by float-kit to the trigger while the menu is open.
-    &.-expanded .d-icon {
-      transform: rotate(180deg);
-    }
+    @include section-picker;
   }
 
   &__link {
@@ -154,12 +124,5 @@
 // inside .block-featured-topics. Selected state mirrors core's mobile
 // latest/hot/new dropdown.
 .block-featured-topics__option {
-  width: 100%;
-  justify-content: flex-start;
-
-  &.--active {
-    background: var(--d-selected);
-    color: var(--d-selected-text-color);
-    font-weight: bold;
-  }
+  @include section-picker-option;
 }

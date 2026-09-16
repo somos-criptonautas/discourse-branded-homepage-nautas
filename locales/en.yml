@@ -32,8 +32,12 @@ en:
       link_text: "View all"
       empty: "No hot topics found."
     leaderboard:
-      title: "Best weekly contributors"
       button_label: "See leaderboard"
+      change_period: "Change the leaderboard period"
+      period:
+        weekly: "weekly karma"
+        monthly: "monthly karma"
+        total: "total karma"
     events:
       title: "Latest events"
       button_label: "Details"

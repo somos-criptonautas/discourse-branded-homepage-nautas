@@ -94,7 +94,6 @@ export default apiInitializer((api) => {
           block: BlockLeaderboard,
           id: "homepage-leaderboard",
           args: {
-            title: "homepage.leaderboard.title",
             count: settings.leaderboard_count,
             period: "weekly",
             buttonLabel: "homepage.leaderboard.button_label",
