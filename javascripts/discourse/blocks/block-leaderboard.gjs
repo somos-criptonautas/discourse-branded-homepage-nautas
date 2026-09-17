@@ -13,7 +13,6 @@ import dIcon from "discourse/ui-kit/helpers/d-icon";
 import dNumber from "discourse/ui-kit/helpers/d-number";
 import { ajax } from "discourse/lib/ajax";
 import { bind } from "discourse/lib/decorators";
-import getURL from "discourse/lib/get-url";
 import KeyValueStore from "discourse/lib/key-value-store";
 import { eq, or } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
@@ -35,17 +34,12 @@ const PERIODS = [
   args: {
     count: { type: "number", default: 8 },
     period: { type: "string", default: "weekly" },
-    buttonLabel: { type: "string", required: true },
   },
 })
 export default class BlockLeaderboard extends Component {
   @service siteSettings;
 
   @tracked selectedKey = preferences.get(PERIOD_KEY);
-
-  // Set once the data arrives: the URL needs the leaderboard id, which only the
-  // response carries. Until then the header renders without the link.
-  @tracked leaderboardUrl;
 
   get selected() {
     return (
@@ -76,10 +70,6 @@ export default class BlockLeaderboard extends Component {
       isCurrentUser: user.id === data.personal?.user?.id,
       isTopRanked: index === 0,
     }));
-
-    this.leaderboardUrl = getURL(
-      `/leaderboard/${data.leaderboard.id}?period=${period}`
-    );
 
     return {
       leaderboard: data.leaderboard,
@@ -121,14 +111,6 @@ export default class BlockLeaderboard extends Component {
             </:content>
           </DMenu>
         </h2>
-
-        {{#if this.leaderboardUrl}}
-          <DButton
-            class="btn-flat block-leaderboard__link"
-            @href={{this.leaderboardUrl}}
-            @translatedLabel={{i18n (themePrefix @buttonLabel)}}
-          />
-        {{/if}}
       </div>
 
       <DAsyncContent

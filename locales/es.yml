@@ -32,7 +32,6 @@ es:
       link_text: "Ver todos"
       empty: "No se encontraron temas calientes."
     leaderboard:
-      button_label: "Ver clasificación"
       change_period: "Cambiar el periodo de la clasificación"
       period:
         weekly: "karma semanal"

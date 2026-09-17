@@ -96,7 +96,6 @@ export default apiInitializer((api) => {
           args: {
             count: settings.leaderboard_count,
             period: "weekly",
-            buttonLabel: "homepage.leaderboard.button_label",
           },
           conditions: {
             type: "setting",

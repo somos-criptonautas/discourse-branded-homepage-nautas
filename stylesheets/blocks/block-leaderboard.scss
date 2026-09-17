@@ -27,10 +27,6 @@
     @include section-picker;
   }
 
-  &__link {
-    white-space: nowrap;
-  }
-
   &__list {
     @include panel;
     @include panel-body;
