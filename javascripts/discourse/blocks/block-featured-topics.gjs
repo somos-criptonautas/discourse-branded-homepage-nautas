@@ -38,6 +38,9 @@ export default class BlockFeaturedTopics extends Component {
   @service store;
   @service site;
   @service currentUser;
+  // discourse-ai's layout preference, set by the excerpts/gists button. Optional
+  // chaining because the service is absent when discourse-ai is disabled.
+  @service gists;
 
   @tracked selectedKey = this.currentUser ? preferences.get(SOURCE_KEY) : null;
 
@@ -72,6 +75,16 @@ export default class BlockFeaturedTopics extends Component {
     return (
       this.options.find((o) => o.key === this.selectedKey) ?? this.options[0]
     );
+  }
+
+  // The AI gist replaces the excerpt unless the viewer picked Compact or Excerpts
+  // ("table"), mirroring the topic list. The attribute only exists when
+  // discourse-ai's can_see_gists? passes for this viewer, so no other check is needed.
+  @bind
+  gistFor(topic) {
+    return this.gists?.currentPreference === "table"
+      ? null
+      : topic.ai_topic_gist;
   }
 
   // Anonymous visitors always get the first option; only members choose, and
@@ -181,7 +194,11 @@ export default class BlockFeaturedTopics extends Component {
                     <h3 class="block-featured-topics__card-title">
                       {{topic.title}}
                     </h3>
-                    {{#if topic.excerpt}}
+                    {{#if (this.gistFor topic)}}
+                      <p class="block-featured-topics__card-excerpt --ai-gist">
+                        {{this.gistFor topic}}
+                      </p>
+                    {{else if topic.excerpt}}
                       <p class="block-featured-topics__card-excerpt">
                         {{topic.excerpt}}
                       </p>
